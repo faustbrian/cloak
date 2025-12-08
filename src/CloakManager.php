@@ -186,8 +186,6 @@ final readonly class CloakManager
      *
      * @param Throwable    $exception Exception instance to log with full details
      * @param null|Request $request   Current HTTP request providing URL and method context
-     *
-     * @return void
      */
     private function logOriginalException(Throwable $exception, ?Request $request): void
     {

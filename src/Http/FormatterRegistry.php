@@ -62,9 +62,8 @@ final class FormatterRegistry
      *
      * @param string $name Formatter name (e.g., 'json-api', 'hal', 'simple')
      *
-     * @return ResponseFormatter The formatter instance for the given name
-     *
      * @throws InvalidArgumentException If no formatter is registered with the given name
+     * @return ResponseFormatter        The formatter instance for the given name
      */
     public function get(string $name): ResponseFormatter
     {
@@ -80,9 +79,8 @@ final class FormatterRegistry
      * falling back to 'simple' if not configured. This is the formatter used
      * when no explicit format is requested.
      *
-     * @return ResponseFormatter Default formatter instance
-     *
      * @throws InvalidArgumentException If the configured default formatter name is not registered
+     * @return ResponseFormatter        Default formatter instance
      */
     public function getDefault(): ResponseFormatter
     {
@@ -101,8 +99,6 @@ final class FormatterRegistry
      *
      * @param string            $name      Formatter name for later retrieval via get()
      * @param ResponseFormatter $formatter Formatter instance implementing ResponseFormatter
-     *
-     * @return void
      */
     public function register(string $name, ResponseFormatter $formatter): void
     {
@@ -143,8 +139,6 @@ final class FormatterRegistry
      * Initializes the registry with Cloak's built-in formatters: simple (basic
      * JSON), json-api (JSON:API spec), problem-json (RFC 7807), hal (HAL spec),
      * and hydra (Hydra/JSON-LD). Called automatically during construction.
-     *
-     * @return void
      */
     private function registerBuiltInFormatters(): void
     {
@@ -161,8 +155,6 @@ final class FormatterRegistry
      * Loads custom formatter classes from 'cloak.custom_formatters' config array
      * and instantiates them. Configuration format: ['name' => FormatterClass::class].
      * Called automatically during construction.
-     *
-     * @return void
      */
     private function registerCustomFormatters(): void
     {

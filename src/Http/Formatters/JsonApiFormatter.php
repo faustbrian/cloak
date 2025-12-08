@@ -25,6 +25,20 @@ use Throwable;
  */
 final readonly class JsonApiFormatter implements ResponseFormatter
 {
+    /**
+     * Format an exception into a JSON:API compliant error response.
+     *
+     * Creates a JSON response following the JSON:API error object structure with
+     * status, title, detail, and optional id/code/meta fields. The response includes
+     * the appropriate Content-Type header for JSON:API compliance.
+     *
+     * @param Throwable            $exception    The exception to format into a JSON:API error response
+     * @param int                  $status       HTTP status code to return (defaults to 500 Internal Server Error)
+     * @param bool                 $includeTrace Whether to include sanitized stack trace in meta field (only for SanitizedException)
+     * @param array<string, mixed> $headers      Additional HTTP headers to include in the response
+     *
+     * @return JsonResponse JSON:API formatted error response with application/vnd.api+json Content-Type
+     */
     public function format(
         Throwable $exception,
         int $status = 500,
@@ -63,6 +77,11 @@ final readonly class JsonApiFormatter implements ResponseFormatter
         return new JsonResponse($data, $status, $headers);
     }
 
+    /**
+     * Get the Content-Type header value for JSON:API responses.
+     *
+     * @return string The JSON:API media type specification
+     */
     public function getContentType(): string
     {
         return 'application/vnd.api+json';
@@ -70,6 +89,14 @@ final readonly class JsonApiFormatter implements ResponseFormatter
 
     /**
      * Get human-readable title for HTTP status code.
+     *
+     * Maps common HTTP status codes to their standard textual representations
+     * for use in the JSON:API error object title field. Returns generic "Error"
+     * for unrecognized status codes.
+     *
+     * @param int $status HTTP status code to convert to title
+     *
+     * @return string Human-readable status title (e.g., "Not Found" for 404)
      */
     private function getTitle(int $status): string
     {

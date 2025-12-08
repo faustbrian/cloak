@@ -36,8 +36,6 @@ final class CloakServiceProvider extends PackageServiceProvider
      *
      * @param Package $package Package instance provided by Spatie's package tools
      *                         for fluent configuration of package settings
-     *
-     * @return void
      */
     public function configurePackage(Package $package): void
     {
@@ -52,8 +50,6 @@ final class CloakServiceProvider extends PackageServiceProvider
      * Called during Laravel's service provider registration phase before any
      * boot methods execute. Binds the exception sanitizer and CloakManager
      * as singletons to ensure consistent instances throughout the application.
-     *
-     * @return void
      */
     #[Override()]
     public function registeringPackage(): void
@@ -69,8 +65,6 @@ final class CloakServiceProvider extends PackageServiceProvider
      * Called after all service providers have been registered. Handles any
      * initialization that requires all services to be available. Currently
      * prepares exception handler integration hooks.
-     *
-     * @return void
      */
     #[Override()]
     public function bootingPackage(): void
@@ -87,8 +81,6 @@ final class CloakServiceProvider extends PackageServiceProvider
      * integrate in bootstrap/app.php or use the Cloak facade for one-off
      * sanitization. Future versions may add automatic integration if Laravel
      * provides package-level exception handler hooks.
-     *
-     * @return void
      */
     private function registerExceptionHandler(): void
     {

@@ -39,18 +39,30 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
     /**
      * Create a new pattern-based sanitizer instance.
      *
-     * @param array<int, string>           $patterns            Regex patterns to match sensitive data
-     * @param string                       $replacement         Text to replace sensitive matches
-     * @param array<string>                $sanitizeTypes       Exception classes to always sanitize
-     * @param array<string>                $allowedTypes        Exception classes to never sanitize
-     * @param array<string, string>        $genericMessages     Generic messages per exception type
-     * @param bool                         $sanitizeInDebug     Whether to sanitize in debug mode
-     * @param null|string                  $errorIdType         Error ID type (ulid, uuid, null)
-     * @param null|string                  $errorIdTemplate     Template for error ID in message
-     * @param null|string                  $errorIdContextKey   Context key for storing error ID
-     * @param bool                         $sanitizeStackTraces Whether to sanitize stack traces
-     * @param array<string, callable>      $contextCallbacks    Custom context data callbacks
-     * @param array<string, array<string>> $exceptionTags       Exception class to tags mapping
+     * @param array<int, string>           $patterns            Regex patterns to match and redact sensitive data like passwords,
+     *                                                          tokens, API keys, and other secrets from exception messages and traces.
+     * @param string                       $replacement         Text to replace sensitive matches with (defaults to "[REDACTED]" to
+     *                                                          clearly indicate sanitization occurred without revealing data).
+     * @param array<string>                $sanitizeTypes       Exception class names that should always be sanitized regardless of
+     *                                                          whether patterns match, useful for exceptions known to contain sensitive data.
+     * @param array<string>                $allowedTypes        Exception class names that should never be sanitized (bypass all sanitization),
+     *                                                          typically used for exceptions that are safe to expose in full detail.
+     * @param array<string, string>        $genericMessages     Maps exception class names to generic replacement messages, completely
+     *                                                          replacing the original message to prevent any potential data leakage.
+     * @param bool                         $sanitizeInDebug     Whether to apply sanitization even when app.debug is enabled, defaults to
+     *                                                          false to allow full error details during development.
+     * @param null|string                  $errorIdType         Type of unique error identifier to generate (ulid, uuid, or null to disable),
+     *                                                          useful for correlating user-facing errors with internal logs.
+     * @param null|string                  $errorIdTemplate     Template string for injecting error ID into messages using {message} and {id}
+     *                                                          placeholders, enables user-friendly error messages with tracking IDs.
+     * @param null|string                  $errorIdContextKey   Laravel Context key for storing the error ID, enables automatic inclusion
+     *                                                          in logs and monitoring tools throughout the request lifecycle.
+     * @param bool                         $sanitizeStackTraces Whether to sanitize stack trace file paths and arguments to prevent
+     *                                                          leaking sensitive information through trace data (defaults to true).
+     * @param array<string, callable>      $contextCallbacks    Associative array mapping context keys to callables that return additional
+     *                                                          context data, executed during sanitization to enrich error tracking.
+     * @param array<string, array<string>> $exceptionTags       Maps exception class names to arrays of tags for categorization and filtering
+     *                                                          in error monitoring systems, stored in Laravel Context for logging.
      */
     public function __construct(
         private array $patterns,
@@ -68,7 +80,13 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
     ) {}
 
     /**
-     * Create a sanitizer from configuration.
+     * Create a sanitizer from application configuration.
+     *
+     * Convenience factory method that loads all sanitizer settings from the
+     * config/cloak.php configuration file, allowing centralized management of
+     * sanitization rules and behavior across the application.
+     *
+     * @return self New sanitizer instance configured from application settings
      */
     public static function fromConfig(): self
     {
@@ -124,6 +142,19 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
         );
     }
 
+    /**
+     * Sanitize an exception to remove sensitive information.
+     *
+     * Processes the exception through pattern matching and sanitization rules to
+     * create a safe version for public consumption. Generates error IDs, executes
+     * context callbacks, applies generic messages or pattern-based sanitization,
+     * and optionally sanitizes stack traces. Returns the original exception if
+     * sanitization is not needed.
+     *
+     * @param Throwable $exception The exception to sanitize
+     *
+     * @return Throwable Either the original exception (if no sanitization needed) or a SanitizedException wrapper
+     */
     public function sanitize(Throwable $exception): Throwable
     {
         if (!$this->shouldSanitize($exception)) {
@@ -186,6 +217,17 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
         );
     }
 
+    /**
+     * Determine if an exception should be sanitized.
+     *
+     * Evaluates exception against allowlist (never sanitize), debug mode settings,
+     * explicit sanitize list, and pattern matching to decide if sanitization should
+     * occur. This provides flexible control over which exceptions require sanitization.
+     *
+     * @param Throwable $exception The exception to evaluate
+     *
+     * @return bool True if sanitization should be applied, false to leave unchanged
+     */
     public function shouldSanitize(Throwable $exception): bool
     {
         $exceptionClass = $exception::class;
@@ -209,6 +251,17 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
         return $this->containsSensitiveData($exception->getMessage());
     }
 
+    /**
+     * Sanitize a message by applying regex patterns.
+     *
+     * Iterates through all configured patterns and applies them to the message,
+     * replacing matched sensitive data with the configured replacement text.
+     * This is the core sanitization logic for message content.
+     *
+     * @param string $message The message to sanitize
+     *
+     * @return string The sanitized message with sensitive data replaced
+     */
     public function sanitizeMessage(string $message): string
     {
         foreach ($this->patterns as $pattern) {

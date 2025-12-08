@@ -87,7 +87,7 @@ final class SanitizedException extends Exception
      * and optionally the function and class names.
      *
      * @return array<int, array{file: string, line: int, function?: string, class?: string}>
-     *         Array of stack trace frames with sanitized file paths and safe metadata
+     *                                                                                       Array of stack trace frames with sanitized file paths and safe metadata
      */
     public function getSanitizedTrace(): array
     {

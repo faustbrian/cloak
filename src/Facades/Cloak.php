@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Facade;
  * sanitization in Laravel applications. Use this facade for one-off exception
  * sanitization or when dependency injection is impractical.
  *
- * @method static FormatterRegistry  getFormatterRegistry() Get the formatter registry for managing response formatters
- * @method static ExceptionSanitizer getSanitizer() Get the exception sanitizer implementation
- * @method static bool               isEnabled() Check if exception sanitization is enabled in configuration
- * @method static \Throwable         sanitizeForRendering(\Throwable $exception, ?Request $request = null) Sanitize an exception for safe rendering
+ * @method static FormatterRegistry  getFormatterRegistry()                                                                                                                                                     Get the formatter registry for managing response formatters
+ * @method static ExceptionSanitizer getSanitizer()                                                                                                                                                             Get the exception sanitizer implementation
+ * @method static bool               isEnabled()                                                                                                                                                                Check if exception sanitization is enabled in configuration
+ * @method static \Throwable         sanitizeForRendering(\Throwable $exception, ?Request $request = null)                                                                                                      Sanitize an exception for safe rendering
  * @method static JsonResponse       toJsonResponse(\Throwable $exception, ?Request $request = null, int $status = 500, bool $includeTrace = false, array<string, mixed> $headers = [], ?string $format = null) Create a formatted JSON response for an exception
  *
  * @author Brian Faust <brian@cline.sh>
