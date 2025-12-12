@@ -1,0 +1,77 @@
+{
+    "name": "cline/cloak",
+    "description": "Prevent sensitive exception details from leaking in Laravel applications",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "laravel",
+        "security",
+        "exceptions",
+        "error-handling"
+    ],
+    "authors": [
+        {
+            "name": "Brian Faust",
+            "email": "brian@cline.sh"
+        }
+    ],
+    "require": {
+        "php": "^8.5.0",
+        "illuminate/contracts": "^11.0 || ^12.0",
+        "illuminate/support": "^11.0 || ^12.0",
+        "spatie/laravel-package-tools": "^1.92.7"
+    },
+    "require-dev": {
+        "cline/coding-standard": "^1.5.8",
+        "orchestra/testbench": "^10.8",
+        "symfony/var-dumper": "^7.4.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Cline\\Cloak\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Cloak": "Cline\\Cloak\\Facades\\Cloak"
+            },
+            "providers": [
+                "Cline\\Cloak\\CloakServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "lint": "vendor/bin/ecs check --fix",
+        "refactor": "rector",
+        "test": [
+            "@test:lint",
+            "@test:type-coverage",
+            "@test:unit",
+            "@test:types",
+            "@test:refactor"
+        ],
+        "test:lint": "vendor/bin/ecs check",
+        "test:refactor": "rector --dry-run",
+        "test:type-coverage": "pest --parallel --min=90 --type-coverage",
+        "test:types": "phpstan",
+        "test:unit": "pest --parallel --min=90 --coverage"
+    }
+}
