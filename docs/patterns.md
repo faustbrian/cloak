@@ -1,8 +1,3 @@
----
-title: Custom Patterns
-description: Configure regex patterns to match and redact sensitive information in exceptions.
----
-
 Cloak uses regex patterns to identify and redact sensitive information. You can customize these patterns to match your application's specific needs.
 
 ## Default Patterns

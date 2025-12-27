@@ -1,8 +1,3 @@
----
-title: Getting Started
-description: Install and configure Cloak to prevent sensitive exception details from leaking in Laravel applications.
----
-
 A security-focused Laravel package that prevents sensitive information from leaking through exception messages and stack traces.
 
 ## Requirements

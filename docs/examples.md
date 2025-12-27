@@ -1,8 +1,3 @@
----
-title: Real-World Examples
-description: Practical examples of using Cloak to prevent information leakage in production applications.
----
-
 Learn how to use Cloak through real-world scenarios and examples.
 
 ## Database Connection Leaks

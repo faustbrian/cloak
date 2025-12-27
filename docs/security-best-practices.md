@@ -1,8 +1,3 @@
----
-title: Security Best Practices
-description: Best practices for using Cloak to maximize security in your Laravel applications.
----
-
 Follow these security best practices to get the most out of Cloak and prevent information leakage.
 
 ## Production Configuration

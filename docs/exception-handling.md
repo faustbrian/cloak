@@ -1,8 +1,3 @@
----
-title: Exception Handling
-description: Configure how Cloak handles different exception types with whitelists, blacklists, and generic messages.
----
-
 Cloak provides fine-grained control over which exceptions to sanitize and how to sanitize them.
 
 ## Exception Type Configuration
