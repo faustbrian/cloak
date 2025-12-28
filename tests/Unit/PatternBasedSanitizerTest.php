@@ -231,6 +231,7 @@ describe('PatternBasedSanitizer', function (): void {
                 '/\/Users\/([^\/]+)/i',      // macOS
                 '/\/home\/([^\/]+)/i',       // Linux
                 '/\/usr\/([^\/]+)/i',        // Linux system paths
+                '/\/workspace\/([^\/]+)/i',  // CI environments
                 '/C:\\\\Users\\\\([^\\\\]+)/i', // Windows
             ],
             replacement: '[REDACTED]',
