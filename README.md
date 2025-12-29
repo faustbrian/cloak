@@ -46,14 +46,14 @@ If you discover any security related issues, please use the [GitHub security rep
 
 The MIT License. Please see [License File](LICENSE.md) for more information.
 
-[ico-tests]: https://github.com/faustbrian/cloak/actions/workflows/quality-assurance.yaml/badge.svg
+[ico-tests]: https://git.cline.sh/faustbrian/cloak/actions/workflows/quality-assurance.yaml/badge.svg
 [ico-version]: https://img.shields.io/packagist/v/cline/cloak.svg
 [ico-license]: https://img.shields.io/badge/License-MIT-green.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/cline/cloak.svg
 
-[link-tests]: https://github.com/faustbrian/cloak/actions
+[link-tests]: https://git.cline.sh/faustbrian/cloak/actions
 [link-packagist]: https://packagist.org/packages/cline/cloak
 [link-downloads]: https://packagist.org/packages/cline/cloak
-[link-security]: https://github.com/faustbrian/cloak/security
-[link-maintainer]: https://github.com/faustbrian
+[link-security]: https://git.cline.sh/faustbrian/cloak/security
+[link-maintainer]: https://git.cline.sh/faustbrian
 [link-contributors]: ../../contributors
