@@ -9,6 +9,9 @@
 
 namespace Cline\Cloak\Exceptions;
 
+use Facade\IgnitionContracts\BaseSolution;
+use Facade\IgnitionContracts\ProvidesSolution;
+use Facade\IgnitionContracts\Solution;
 use InvalidArgumentException;
 
 use function sprintf;
@@ -26,7 +29,7 @@ use function sprintf;
  * @see FormatterRegistry
  * @see ResponseFormatter
  */
-final class FormatterNotFoundException extends InvalidArgumentException implements CloakException
+final class FormatterNotFoundException extends InvalidArgumentException implements CloakException, ProvidesSolution
 {
     /**
      * Create a formatter not found exception for the given formatter name.
@@ -41,5 +44,17 @@ final class FormatterNotFoundException extends InvalidArgumentException implemen
     public static function forName(string $name): self
     {
         return new self(sprintf("Response formatter '%s' not found.", $name));
+    }
+
+    public function getSolution(): Solution
+    {
+        /** @var BaseSolution $solution */
+        $solution = BaseSolution::create('Review package usage and configuration.');
+
+        return $solution
+            ->setSolutionDescription('Exception: '.$this->getMessage())
+            ->setDocumentationLinks([
+                'Package documentation' => 'https://github.com/cline/cloak',
+            ]);
     }
 }
