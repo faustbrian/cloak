@@ -1,10 +1,12 @@
 ## Table of Contents
 
-1. Overview (`docs/README.md`)
-2. Examples (`docs/examples.md`)
-3. Exception Handling (`docs/exception-handling.md`)
-4. Patterns (`docs/patterns.md`)
-5. Security Best Practices (`docs/security-best-practices.md`)
+1. [Overview](#doc-docs-readme) (`docs/README.md`)
+2. [Examples](#doc-docs-examples) (`docs/examples.md`)
+3. [Exception Handling](#doc-docs-exception-handling) (`docs/exception-handling.md`)
+4. [Patterns](#doc-docs-patterns) (`docs/patterns.md`)
+5. [Security Best Practices](#doc-docs-security-best-practices) (`docs/security-best-practices.md`)
+<a id="doc-docs-readme"></a>
+
 A security-focused Laravel package that prevents sensitive information from leaking through exception messages and stack traces.
 
 ## Requirements
@@ -272,10 +274,12 @@ Produces consistent responses:
 
 ## Next Steps
 
-- Learn about [custom patterns](patterns.md) to match your specific needs
-- Explore [exception handling strategies](exception-handling.md)
-- Review [security best practices](security-best-practices.md)
-- See [real-world examples](examples.md)
+- Learn about [custom patterns](#doc-docs-patterns) to match your specific needs
+- Explore [exception handling strategies](#doc-docs-exception-handling)
+- Review [security best practices](#doc-docs-security-best-practices)
+- See [real-world examples](#doc-docs-examples)
+
+<a id="doc-docs-examples"></a>
 
 Learn how to use Cloak through real-world scenarios and examples.
 
@@ -1066,9 +1070,11 @@ Cloak::toJsonResponse($exception, format: 'my-format');
 
 ## Next Steps
 
-- Review [security best practices](security-best-practices.md)
-- Learn about [custom patterns](patterns.md)
-- Explore [exception handling strategies](exception-handling.md)
+- Review [security best practices](#doc-docs-security-best-practices)
+- Learn about [custom patterns](#doc-docs-patterns)
+- Explore [exception handling strategies](#doc-docs-exception-handling)
+
+<a id="doc-docs-exception-handling"></a>
 
 Cloak provides fine-grained control over which exceptions to sanitize and how to sanitize them.
 
@@ -1410,9 +1416,11 @@ test('sanitizes database exceptions', function () {
 
 ## Next Steps
 
-- Learn about [generic messages](generic-messages.md) for complete redaction
-- Explore [logging strategies](logging.md) for debugging
-- Review [security best practices](security-best-practices.md)
+- Learn about [generic messages](#) for complete redaction
+- Explore [logging strategies](#) for debugging
+- Review [security best practices](#doc-docs-security-best-practices)
+
+<a id="doc-docs-patterns"></a>
 
 Cloak uses regex patterns to identify and redact sensitive information. You can customize these patterns to match your application's specific needs.
 
@@ -1678,9 +1686,11 @@ dump($sanitizer->sanitizeMessage($message));
 
 ## Next Steps
 
-- Learn about [exception handling strategies](exception-handling.md)
-- Explore [generic messages](generic-messages.md) for complete redaction
-- Review [security best practices](security-best-practices.md)
+- Learn about [exception handling strategies](#doc-docs-exception-handling)
+- Explore [generic messages](#) for complete redaction
+- Review [security best practices](#doc-docs-security-best-practices)
+
+<a id="doc-docs-security-best-practices"></a>
 
 Follow these security best practices to get the most out of Cloak and prevent information leakage.
 
@@ -2145,6 +2155,6 @@ Before deploying to production:
 
 ## Next Steps
 
-- Learn about [advanced configuration](advanced-configuration.md)
-- Explore [logging strategies](logging.md)
-- Review [testing guide](testing.md)
+- Learn about [advanced configuration](#)
+- Explore [logging strategies](#)
+- Review [testing guide](#)
