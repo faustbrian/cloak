@@ -1,10 +1,10 @@
 ## Table of Contents
 
-1. [Overview](#doc-docs-readme) (`docs/README.md`)
-2. [Examples](#doc-docs-examples) (`docs/examples.md`)
-3. [Exception Handling](#doc-docs-exception-handling) (`docs/exception-handling.md`)
-4. [Patterns](#doc-docs-patterns) (`docs/patterns.md`)
-5. [Security Best Practices](#doc-docs-security-best-practices) (`docs/security-best-practices.md`)
+1. [Overview](#doc-docs-readme)
+2. [Examples](#doc-docs-examples)
+3. [Exception Handling](#doc-docs-exception-handling)
+4. [Patterns](#doc-docs-patterns)
+5. [Security Best Practices](#doc-docs-security-best-practices)
 <a id="doc-docs-readme"></a>
 
 A security-focused Laravel package that prevents sensitive information from leaking through exception messages and stack traces.
