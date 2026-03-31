@@ -430,4 +430,22 @@ describe('PatternBasedSanitizer', function (): void {
         expect($trace)->toBeArray();
         expect($trace)->toBeEmpty();
     });
+
+    test('normalizes string exception codes when wrapping sanitized exceptions', function (): void {
+        $sanitizer = new PatternBasedSanitizer(
+            patterns: ['/secret/i'],
+            replacement: '[REDACTED]',
+        );
+
+        $exception = new PDOException('SQLSTATE[HY000]: secret');
+        $reflection = new ReflectionClass($exception);
+        $code = $reflection->getProperty('code');
+        $code->setValue($exception, 'HY000');
+
+        $sanitized = $sanitizer->sanitize($exception);
+
+        expect($sanitized)->toBeInstanceOf(SanitizedException::class);
+        expect($sanitized->getCode())->toBe(0);
+        expect($sanitized->getPrevious())->toBe($exception);
+    });
 });

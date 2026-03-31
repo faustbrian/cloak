@@ -246,7 +246,7 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
         // Create a sanitized wrapper exception
         return new SanitizedException(
             message: $message,
-            code: $exception->getCode(),
+            code: $this->normalizeExceptionCode($exception->getCode()),
             previous: $exception,
             errorId: $errorId,
             sanitizedTrace: $sanitizedTrace,
@@ -311,6 +311,28 @@ final readonly class PatternBasedSanitizer implements ExceptionSanitizer
         }
 
         return $message;
+    }
+
+    /**
+     * Normalize throwable codes for Exception-based wrappers.
+     *
+     * Native exceptions can expose string codes, but Exception::__construct()
+     * only accepts integers. Preserve integer and numeric-string codes and
+     * fall back to 0 for non-numeric string codes such as SQLSTATE values.
+     *
+     * @param mixed $code Exception code returned by Throwable::getCode()
+     */
+    private function normalizeExceptionCode(mixed $code): int
+    {
+        if (is_int($code)) {
+            return $code;
+        }
+
+        if (is_string($code) && preg_match('/^-?\d+$/', $code) === 1) {
+            return (int) $code;
+        }
+
+        return 0;
     }
 
     /**

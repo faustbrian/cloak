@@ -10,3 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added repository-level maintainer guidance in `AGENTS.md`.
 - Initial release
+
+### Fixed
+- Normalized non-integer exception codes before wrapping sanitized exceptions.
